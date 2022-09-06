@@ -209,7 +209,7 @@ export const questions: Question[] = [
     id: '21',
     icon: 'https://andreasjansen.com/wp-content/uploads/2022/03/Lernen.png',
     text: 'Über welches Thema würdest du gerne mehr erfahren?',
-    answerIds: ['2110', '2111', '2112', '2113', '2114', '2115', '2116', '2117', '2118', '2119', '2120', '2120'],
+    answerIds: ['2110', '2111', '2112', '2113', '2114', '2115', '2116', '2117', '2118', '2119', '2120'],
     selectedAnswerIds: null,
     followUpQuestionId: '22',
     type: QuestionType.MultipleChoice,
