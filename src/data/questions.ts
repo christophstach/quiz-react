@@ -12,7 +12,7 @@ export const questions: Question[] = [
 
   {
     id: '100',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/MoneyChart.png',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/2.png',
     text: 'Möchtest du auch einen Blick auf deine Investitionspotenziale werfen?',
     answerIds: ['1001', '1002'],
     selectedAnswerId: null,
@@ -21,7 +21,7 @@ export const questions: Question[] = [
 
   {
     id: '101',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/SparenPig.png',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/2.png',
     text: 'Möchtest du auch einen Blick auf deine Sparpotenziale werfen?',
     answerIds: ['1011', '1012'],
     selectedAnswerId: null,
@@ -30,7 +30,7 @@ export const questions: Question[] = [
 
   {
     id: '102',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/Shield.png',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/3.png',
     text: 'Möchtest du auch einen Blick auf deine Absicherungslücken werfen?',
     answerIds: ['1021', '1022'],
     selectedAnswerId: null,
@@ -48,8 +48,8 @@ export const questions: Question[] = [
 
   {
     id: '4',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/Versicherung.png',
-    text: 'Hast du in den letzten 12 Monaten einen dieser Verträge gewechselt ',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/4.png',
+    text: 'Hast du einen oder mehrere dieser Verträge in den letzten 12 Monaten gewechselt?',
     answerIds: ['41', '42', '43'],
     followUpQuestionId: '5',
     selectedAnswerIds: null,
@@ -87,7 +87,7 @@ export const questions: Question[] = [
 
   {
     id: '8',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/Abos.png',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/6.png',
     text: 'Hast du einen Überblick über deine aktuellen Abos und Verträge?',
     answerIds: ['81', '82', '83'],
     selectedAnswerId: null,
@@ -96,8 +96,8 @@ export const questions: Question[] = [
 
   {
     id: '9',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/AppsHandy.png',
-    text: 'Könntest du dir vorstellen eine App zu nutzen, um deine Finanzen besser zu sortieren?',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/7.png',
+    text: 'Benutzt du eine App, um deine Finanzen besser zu analysieren?',
     answerIds: ['91', '92'],
     selectedAnswerId: null,
     type: QuestionType.Simple,
@@ -105,7 +105,7 @@ export const questions: Question[] = [
 
   {
     id: '10',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/Kreditkarte.png',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/8.png',
     text: 'Wie viele kostenlose Kreditkarten besitzt du?',
     answerIds: ['101', '102', '103', '104', '105'],
     selectedAnswerId: null,
@@ -141,7 +141,7 @@ export const questions: Question[] = [
 
   {
     id: '14',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/Schulden.png',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/9.png',
     text: 'Hast du Konsumschulden oder andere Kredite?',
     answerIds: ['141', '142', '143'],
     selectedAnswerId: null,
@@ -152,15 +152,15 @@ export const questions: Question[] = [
     id: '15',
     icon: 'https://andreasjansen.com/wp-content/uploads/2022/03/Stock.png',
     text: 'Besitzt du ein Aktiendepot?',
-    answerIds: ['151', '152'],
+    answerIds: ['151', '152', '153'],
     selectedAnswerId: null,
     type: QuestionType.Simple,
   },
 
   {
     id: '16',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/Verteilung.png',
-    text: 'Hast du einen akutell eingen guten Überblick über deine Vermögenshöhe?',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/10.png',
+    text: 'Hast du einen guten Überblick über deine Vermögenshöhe?',
     answerIds: ['161', '162', '163'],
     selectedAnswerId: null,
     type: QuestionType.Simple,
@@ -237,7 +237,7 @@ export const questions: Question[] = [
 
   {
     id: '24',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/Notfallmappebild.png',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/11.png',
     text: 'Hast du einen Notfallordner, um für Notfälle abgesichert zu sein?',
     answerIds: ['241', '242'],
     selectedAnswerId: null,
@@ -246,7 +246,7 @@ export const questions: Question[] = [
 
   {
     id: '25',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/03/Versicherung.png',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/5.png',
     text: 'Welche dieser Versicherungen besitzt du?',
     answerIds: ['251', '252', '253', '254', '255', '256'],
     selectedAnswerIds: null,
@@ -267,8 +267,8 @@ export const questions: Question[] = [
 
   {
     id: '27',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/App.png',
-    text: 'Hättest du Lust dir bei deinen Versicherungen helfen zu lassen?',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/12.png',
+    text: 'Willst du deine Versicherungen selbst auswählen?',
     answerIds: ['271', '272', '273'],
     selectedAnswerId: null,
     type: QuestionType.Simple,
@@ -276,8 +276,8 @@ export const questions: Question[] = [
 
   {
     id: '28',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/Glaubenssatz.png',
-    text: 'Hast du dich schon einmal mit deinen Glaubensätzen, die dich an erfolgreichen Finanzen hindern können auseinander gesetzt?',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/13.png',
+    text: 'Hast du dich schon einmal mit deinen Glaubensätzen, die dich an erfolgreichen Finanzen hindern können, auseinander gesetzt?',
     answerIds: ['281', '282', '283'],
     selectedAnswerId: null,
     type: QuestionType.Simple,
@@ -285,7 +285,7 @@ export const questions: Question[] = [
 
   {
     id: '29',
-    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/Lernen.png',
+    icon: 'https://andreasjansen.com/wp-content/uploads/2022/09/14.png',
     text: 'Wie würdest du am liebsten weiter dein Finanzwissen aufbauen?',
     answerIds: ['291', '292', '293', '294', '295', '296', '297'],
     selectedAnswerIds: null,

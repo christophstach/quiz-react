@@ -89,7 +89,7 @@ export const answers: Answer[] = [
 
   { id: '82', text: 'Nein', followUpQuestionId: '9' },
 
-  { id: '83', text: 'Ein bisschen, aber sortiert und strukturiert ist nichts. ', followUpQuestionId: '9' },
+  { id: '83', text: 'Ein bisschen, aber sortiert und strukturiert ist nichts ', followUpQuestionId: '9' },
 
   { id: '91', text: 'Ja', followUpQuestionId: '10' },
 
