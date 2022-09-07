@@ -1,5 +1,6 @@
 export const config = {
-  subscribeUrl: 'http://localhost:5003/',
-  // subscribeUrl: 'https://andreasjansen.com/backend/subscribe.php',
-  linkPrefix: 'https://andreasjansen.com/ergebnis/',
+  subscribeUrl: 'https://andreasjansen.com/backend/subscribe.php',
+  //subscribeUrl: 'http://localhost:5003/',
+  recommendationsLinkPrefix: 'https://andreasjansen.com/ergebnis/?',
+  // recommendationsLinkPrefix: 'http://localhost:5003/test.php?'
 };

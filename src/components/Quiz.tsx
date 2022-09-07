@@ -64,14 +64,15 @@ export default function Quiz() {
   function handleMailFormSubmit(firstName: string, email: string): void {
     setLoading(true);
 
+    formData.append('firstName', firstName);
+
+    const recommendationsLink = `${config.recommendationsLinkPrefix}${formDataToUrlParams(formData)}`;
     const json = JSON.stringify({
       ...payload,
-      firstName: firstName,
-      email: email,
+      firstName,
+      email,
+      recommendationsLink
     });
-
-    formData.append('firstName', firstName);
-    formData.append('email', email);
 
     fetch(config.subscribeUrl, {
       method: 'POST',
@@ -85,13 +86,11 @@ export default function Quiz() {
         setLoading(false);
         setEmailSent(true);
 
-        const link = `${config.linkPrefix}${formDataToUrlParams(formData)}`;
-
         setDepth(RESET);
         setQuestions(RESET);
         setMailForm(RESET);
 
-        window.location.replace(link);
+        window.location.replace(recommendationsLink);
       })
       .catch(() => {
         setLoading(false);
