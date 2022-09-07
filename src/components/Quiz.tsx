@@ -1,7 +1,7 @@
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
 
-import { depthAtom, questionsAtom } from '../atoms/root';
+import { depthAtom, mailFormAtom, questionsAtom } from '../atoms/root';
 import { currentQuestionAtom, selectedAnwerIdsAtom, selectedAnwerIdState } from '../atoms/features/questions';
 import { canNavigateNextPageAtom, canNavigatePreviousPageAtom } from '../atoms/features/pages';
 
@@ -15,9 +15,12 @@ import Rootline from './Rootline';
 import SimpleQuestion from './SimpleQuestions';
 import { formDataAtom, payloadAtom } from '../atoms/features/utils';
 import { RESET } from 'jotai/utils';
+import { config } from '../config';
 
 export default function Quiz() {
   const setQuestions = useSetAtom(questionsAtom);
+  const setMailForm = useSetAtom(mailFormAtom);
+
   const [depth, setDepth] = useAtom(depthAtom);
   const [selectedAnswerId, setSelectedAnswerId] = useAtom(selectedAnwerIdState);
   const [selectedAnswerIds, setSelectedAnswerIds] = useAtom(selectedAnwerIdsAtom);
@@ -54,6 +57,7 @@ export default function Quiz() {
     if (confirm('Willst du wirklich von vorne beginnen?')) {
       setDepth(RESET);
       setQuestions(RESET);
+      setMailForm(RESET);
     }
   }
 
@@ -69,22 +73,25 @@ export default function Quiz() {
     formData.append('firstName', firstName);
     formData.append('email', email);
 
-    // 'https://andreasjansen.com/backend/subscribe.php'
-    fetch('http://localhost:5003', {
+    fetch(config.subscribeUrl, {
       method: 'POST',
       body: json,
       headers: {
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => {
+      .then(() => {
         setError(false);
         setLoading(false);
         setEmailSent(true);
 
-        const link = `https://andreasjansen.com/ergebnis/${formDataToUrlParams(formData)}`;
-        // alert(link);
-        //window.location.replace(link);
+        const link = `${config.linkPrefix}${formDataToUrlParams(formData)}`;
+
+        setDepth(RESET);
+        setQuestions(RESET);
+        setMailForm(RESET);
+
+        window.location.replace(link);
       })
       .catch(() => {
         setLoading(false);
@@ -101,78 +108,87 @@ export default function Quiz() {
           <div className="tw-bg-jansen-yellow tw-text-white tw-p-3 -tw-mr-3">Zu 100% für 0 Euro</div>
         </div>
 
-        <div className="tw-p-10">
-          <Rootline />
-        </div>
-
-        {currentQuestion ? (
-          <>
-            {' '}
-            <div className="tw-pb-10 tw-px-10">
-              {currentQuestion.type === QuestionType.Simple ? (
-                <SimpleQuestion
-                  question={currentQuestion}
-                  selectedAnswerId={selectedAnswerId}
-                  onAnswerSelected={handleAnswerSelected}
-                />
-              ) : (
-                <MultipleChoiceQuestion
-                  question={currentQuestion}
-                  selectedAnswerIds={selectedAnswerIds}
-                  onAnswersSelected={handleAnswersSelected}
-                />
-              )}
-            </div>
-            <div className="tw-border-t tw-border-jansen-purple tw-px-10 tw-py-5 tw-flex tw-gap-3 tw-justify-between">
-              <div>
-                <button
-                  className="tw-text-white tw-bg-jansen-yellow tw-p-2 disabled:tw-bg-gray-500"
-                  onClick={handlePrev}
-                  disabled={!canNavigatePreviousPage}
-                >
-                  Zurück
-                </button>
-              </div>
-
-              <div>
-                <button className="tw-text-white tw-p-2 tw-bg-gray-500" onClick={handleResetQuiz}>
-                  Neu beginnen
-                </button>
-              </div>
-
-              <div className="tw-flex-1 tw-text-right">
-                <button
-                  className="tw-text-white tw-bg-jansen-yellow tw-p-2 disabled:tw-bg-gray-500"
-                  onClick={handleNext}
-                  disabled={!canNavigateNextPage}
-                >
-                  Weiter
-                </button>
-              </div>
-            </div>
-          </>
+        {emailSent ? (
+          <div className="tw-p-10">
+            <h1 className="tw-text-jansen-purple tw-font-bold tw-text-2xl tw-text-center">
+              Deine Auswertung ist auf dem Weg du wirst weitergeleitet...
+            </h1>
+          </div>
         ) : (
           <>
             <div className="tw-p-10">
-              {emailSent && false ? (
-                <h1 className="tw-text-jansen-purple tw-font-bold tw-text-2xl tw-text-center">
-                  Ihre Auswertung ist auf dem Weg sie werden weitergeleitet...
-                </h1>
-              ) : (
-                <>
-                  <MailForm onSubmit={handleMailFormSubmit} loading={loading} error={error} />
-                </>
-              )}
+              <Rootline />
             </div>
-            <div className="tw-border-t tw-border-jansen-purple tw-px-10 tw-py-5 tw-flex tw-justify-between">
-              <button
-                className="tw-text-white tw-bg-jansen-yellow tw-p-2 disabled:tw-bg-gray-500"
-                onClick={handlePrev}
-                disabled={!canNavigatePreviousPage}
-              >
-                Zurück
-              </button>
-            </div>
+
+            {currentQuestion ? (
+              <>
+                {' '}
+                <div className="tw-pb-10 tw-px-10">
+                  {currentQuestion.type === QuestionType.Simple ? (
+                    <SimpleQuestion
+                      question={currentQuestion}
+                      selectedAnswerId={selectedAnswerId}
+                      onAnswerSelected={handleAnswerSelected}
+                    />
+                  ) : (
+                    <MultipleChoiceQuestion
+                      question={currentQuestion}
+                      selectedAnswerIds={selectedAnswerIds}
+                      onAnswersSelected={handleAnswersSelected}
+                    />
+                  )}
+                </div>
+                <div className="tw-border-t tw-border-jansen-purple tw-px-10 tw-py-5 tw-flex tw-gap-3 tw-justify-between">
+                  <div>
+                    <button
+                      className="tw-text-white tw-bg-jansen-yellow tw-p-2 disabled:tw-bg-gray-500"
+                      onClick={handlePrev}
+                      disabled={!canNavigatePreviousPage}
+                    >
+                      Zurück
+                    </button>
+                  </div>
+
+                  <div>
+                    <button className="tw-text-white tw-p-2 tw-bg-gray-500" onClick={handleResetQuiz}>
+                      Neu beginnen
+                    </button>
+                  </div>
+
+                  <div className="tw-flex-1 tw-text-right">
+                    <button
+                      className="tw-text-white tw-bg-jansen-yellow tw-p-2 disabled:tw-bg-gray-500"
+                      onClick={handleNext}
+                      disabled={!canNavigateNextPage}
+                    >
+                      Weiter
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <MailForm onSubmit={handleMailFormSubmit} loading={loading} error={error} />
+
+                <div className="tw-border-t tw-border-jansen-purple tw-px-10 tw-py-5 tw-flex tw-gap-3 tw-justify-between">
+                  <div>
+                    <button
+                      className="tw-text-white tw-bg-jansen-yellow tw-p-2 disabled:tw-bg-gray-500"
+                      onClick={handlePrev}
+                      disabled={!canNavigatePreviousPage}
+                    >
+                      Zurück
+                    </button>
+                  </div>
+
+                  <div className="tw-flex-1">
+                    <button className="tw-text-white tw-p-2 tw-bg-gray-500" onClick={handleResetQuiz}>
+                      Neu beginnen
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </>
         )}
       </div>
