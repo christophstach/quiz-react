@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         'jansen-purple': '#270d5b',
         'jansen-yellow': '#e9c142',
+        'jansen-gray': '#b1b1b1',
       },
       boxShadow: {
         quiz: '2px 2px 3px #888',

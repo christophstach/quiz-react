@@ -1,7 +1,8 @@
 import { Question } from '../types';
-import { useRecoilValue } from 'recoil';
+
 import { answersState } from '../state/atoms';
 import { findById } from '../state/utils';
+import { useAtomValue } from 'jotai';
 
 export type SimpleQuestionProps = {
   question: Question;
@@ -11,7 +12,7 @@ export type SimpleQuestionProps = {
 
 export default function SimpleQuestion(props: SimpleQuestionProps) {
   const { question, selectedAnswerId = null, onAnswerSelected } = props;
-  const answers = useRecoilValue(answersState);
+  const answers = useAtomValue(answersState);
 
   const questionsAnswers = question.answerIds.map((answerId) => findById(answers, answerId));
 

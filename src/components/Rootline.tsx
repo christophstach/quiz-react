@@ -1,10 +1,10 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { depthState } from '../state/atoms';
 import { pagesState } from '../state/selectors';
 
 export default function Rootline() {
-  const pages = useRecoilValue(pagesState);
-  const setDepth = useSetRecoilState(depthState);
+  const pages = useAtomValue(pagesState);
+  const setDepth = useSetAtom(depthState);
 
   function handlePageClick(page: number) {
     setDepth(page);

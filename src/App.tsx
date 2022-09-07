@@ -1,13 +1,13 @@
-import { RecoilRoot } from 'recoil';
+import { Provider } from 'jotai';
 import Quiz from './components/Quiz';
 
 function App() {
   return (
-    <RecoilRoot>
+    <Provider>
       <div className="tw-preflight">
         <Quiz />
       </div>
-    </RecoilRoot>
+    </Provider>
   );
 }
 

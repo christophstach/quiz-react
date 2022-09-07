@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 import { answersState } from '../state/atoms';
 import { findById } from '../state/utils';
 import { Question } from '../types';
@@ -11,7 +11,7 @@ export type MultipleChoiceQuestionProps = {
 
 export default function MultipleChoiceQuestion(props: MultipleChoiceQuestionProps) {
   const { question, selectedAnswerIds = [], onAnswersSelected } = props;
-  const answers = useRecoilValue(answersState);
+  const answers = useAtomValue(answersState);
 
   const questionsAnswers = question.answerIds.map((answerId) => findById(answers, answerId));
 

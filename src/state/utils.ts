@@ -103,3 +103,18 @@ export function getCurrentQuestion(
     return null;
   }
 }
+
+export function formDataToUrlParams(formData: FormData) {
+  const data = [...formData.entries()];
+
+  return data
+    .map((entry) => {
+      if (data.filter((x) => x[0] === entry[0]).length > 1) {
+        // doppelt
+        return `${encodeURIComponent(entry[0])}[]=${encodeURIComponent(entry[1] as string)}`;
+      } else {
+        return `${encodeURIComponent(entry[0])}=${encodeURIComponent(entry[1] as string)}`;
+      }
+    })
+    .join('&');
+}

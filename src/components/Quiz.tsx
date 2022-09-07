@@ -1,31 +1,39 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
+import { useState } from 'react';
+
 import { depthState } from '../state/atoms';
 import {
   canNavigateNextPageState,
   canNavigatePreviousPageState,
   currentQuestionState,
+  formDataState,
+  payloadState,
   selectedAnwerIdsState,
   selectedAnwerIdState,
-  summaryQuestionsState,
 } from '../state/selectors';
+import { formDataToUrlParams } from '../state/utils';
 
 import { QuestionType } from '../types';
+import { MailForm } from './MailForm';
 
 import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 import Rootline from './Rootline';
 import SimpleQuestion from './SimpleQuestions';
-import Summary from './Summary';
 
 export default function Quiz() {
-  const [depth, setDepth] = useRecoilState(depthState);
-  const [selectedAnswerId, setSelectedAnswerId] = useRecoilState(selectedAnwerIdState);
-  const [selectedAnswerIds, setSelectedAnswerIds] = useRecoilState(selectedAnwerIdsState);
+  const [depth, setDepth] = useAtom(depthState);
+  const [selectedAnswerId, setSelectedAnswerId] = useAtom(selectedAnwerIdState);
+  const [selectedAnswerIds, setSelectedAnswerIds] = useAtom(selectedAnwerIdsState);
 
-  const currentQuestion = useRecoilValue(currentQuestionState);
-  const summaryQuestions = useRecoilValue(summaryQuestionsState);
+  const currentQuestion = useAtomValue(currentQuestionState);
+  const payload = useAtomValue(payloadState);
+  const formData = useAtomValue(formDataState);
 
-  const canNavigatePreviousPage = useRecoilValue(canNavigatePreviousPageState);
-  const canNavigateNextPage = useRecoilValue(canNavigateNextPageState);
+  const canNavigatePreviousPage = useAtomValue(canNavigatePreviousPageState);
+  const canNavigateNextPage = useAtomValue(canNavigateNextPageState);
+
+  const [loading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
   function handleAnswerSelected(answerId: string): void {
     setSelectedAnswerId(answerId);
@@ -42,6 +50,36 @@ export default function Quiz() {
 
   function handleNext(): void {
     setDepth(depth + 1);
+  }
+
+  function handleMailFormSubmit(firstName: string, email: string): void {
+    setLoading(false);
+
+    const json = JSON.stringify({
+      ...payload,
+      firstName: firstName,
+      email: email,
+    });
+
+    formData.append('firstName', firstName);
+    formData.append('email', email);
+    console.log(json);
+
+    // 'https://andreasjansen.com/backend/subscribe.php'
+    fetch('http://localhost:5003', {
+      method: 'POST',
+      body: json,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((response) => {
+      setLoading(false);
+      setEmailSent(true);
+
+      const link = `https://andreasjansen.com/ergebnis/${formDataToUrlParams(formData)}`;
+      // alert(link);
+      //window.location.replace(link);
+    });
   }
 
   return (
@@ -96,11 +134,24 @@ export default function Quiz() {
         ) : (
           <>
             <div className="tw-p-10">
-              <h1 className="tw-text-jansen-purple tw-font-bold tw-text-2xl tw-text-center">
-                Vielen Danke die Teilnahme am Quiz!
-              </h1>
-
-              <Summary questions={summaryQuestions} />
+              {emailSent && false ? (
+                <h1 className="tw-text-jansen-purple tw-font-bold tw-text-2xl tw-text-center">
+                  Ihre Auswertung ist auf dem Weg sie werden weitergeleitet...
+                </h1>
+              ) : (
+                <>
+                  {loading ? (
+                    <div className="tw-flex tw-justify-center">
+                      <img
+                        src="https://andreasjansen.com/wp-content/uploads/2022/03/Ladezeichen.gif"
+                        alt="Loading..."
+                      />
+                    </div>
+                  ) : (
+                    <MailForm onSubmit={handleMailFormSubmit} />
+                  )}
+                </>
+              )}
             </div>
             <div className="tw-border-t tw-border-jansen-purple tw-px-10 tw-py-5 tw-flex tw-justify-between">
               <button
@@ -109,14 +160,6 @@ export default function Quiz() {
                 disabled={!canNavigatePreviousPage}
               >
                 Zurück
-              </button>
-
-              <button
-                className="tw-text-white tw-bg-jansen-yellow tw-p-2 disabled:tw-bg-gray-500"
-                onClick={handleNext}
-                disabled={!canNavigateNextPage}
-              >
-                Weiter
               </button>
             </div>
           </>
