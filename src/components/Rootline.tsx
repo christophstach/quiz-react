@@ -1,10 +1,10 @@
 import { useAtomValue, useSetAtom } from 'jotai';
-import { depthState } from '../state/atoms';
-import { pagesState } from '../state/selectors';
+import { depthAtom } from '../atoms/root';
+import { pagesState } from '../atoms/features/pages';
 
 export default function Rootline() {
   const pages = useAtomValue(pagesState);
-  const setDepth = useSetAtom(depthState);
+  const setDepth = useSetAtom(depthAtom);
 
   function handlePageClick(page: number) {
     setDepth(page);

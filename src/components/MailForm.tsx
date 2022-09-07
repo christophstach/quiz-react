@@ -1,14 +1,19 @@
-import { FormEvent, useState } from 'react';
+import { useAtom } from 'jotai';
+import { FormEvent } from 'react';
+import { emailAtom, firstNameAtom } from '../atoms/features/mailForm';
+import { LoadingSpinner } from './LoadingSpinner';
 
 export type MailFormProps = {
   onSubmit: (firstName: string, email: string) => void;
+  loading: boolean;
+  error: boolean;
 };
 
 export function MailForm(props: MailFormProps) {
-  const { onSubmit } = props;
+  const { onSubmit, loading, error } = props;
 
-  const [firstName, setFirstName] = useState('');
-  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useAtom(firstNameAtom);
+  const [email, setEmail] = useAtom(emailAtom);
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -57,10 +62,22 @@ export function MailForm(props: MailFormProps) {
       </div>
 
       <div>
-        <button className="tw-bg-jansen-purple tw-text-jansen-yellow tw-w-full tw-p-5 tw-text-2xl" type="submit">
-          Zur Auswertung
+        <button
+          className="tw-bg-jansen-purple tw-text-jansen-yellow disabled:tw-bg-gray-500 tw-w-full tw-p-5 tw-text-2xl tw-flex tw-gap-3 tw-items-center tw-justify-center"
+          type="submit"
+          disabled={loading}
+        >
+          <span>Zur Auswertung</span>
+
+          {loading && <LoadingSpinner />}
         </button>
       </div>
+
+      {error && (
+        <div className="tw-flex tw-justify-center tw-mt-5 tw-text-red-800 tw-bg-red-200 tw-border tw-border-red-800 tw-p-2">
+          Ups! Da ist ein Fehler aufgetreten. Bitte versuche es erneut.
+        </div>
+      )}
     </form>
   );
 }

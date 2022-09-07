@@ -1,7 +1,7 @@
 import { Question } from '../types';
 
-import { answersState } from '../state/atoms';
-import { findById } from '../state/utils';
+import { answersAtom } from '../atoms/root';
+import { findById } from '../atoms/helpers';
 import { useAtomValue } from 'jotai';
 
 export type SimpleQuestionProps = {
@@ -12,7 +12,7 @@ export type SimpleQuestionProps = {
 
 export default function SimpleQuestion(props: SimpleQuestionProps) {
   const { question, selectedAnswerId = null, onAnswerSelected } = props;
-  const answers = useAtomValue(answersState);
+  const answers = useAtomValue(answersAtom);
 
   const questionsAnswers = question.answerIds.map((answerId) => findById(answers, answerId));
 

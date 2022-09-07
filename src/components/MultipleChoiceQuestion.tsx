@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue } from 'jotai';
-import { answersState } from '../state/atoms';
-import { findById } from '../state/utils';
+import { answersAtom } from '../atoms/root';
+import { findById } from '../atoms/helpers';
 import { Question } from '../types';
 
 export type MultipleChoiceQuestionProps = {
@@ -11,7 +11,7 @@ export type MultipleChoiceQuestionProps = {
 
 export default function MultipleChoiceQuestion(props: MultipleChoiceQuestionProps) {
   const { question, selectedAnswerIds = [], onAnswersSelected } = props;
-  const answers = useAtomValue(answersState);
+  const answers = useAtomValue(answersAtom);
 
   const questionsAnswers = question.answerIds.map((answerId) => findById(answers, answerId));
 
