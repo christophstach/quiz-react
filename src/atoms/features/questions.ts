@@ -86,7 +86,7 @@ export const summaryQuestionsAtom = atom((get) => {
       } else {
         nextQuestion = null;
       }
-    } else {
+    } else if(nextQuestion.type === QuestionType.MultipleChoice) {
       if (nextQuestion.followUpQuestionId) {
         nextQuestion = findById(questions, nextQuestion.followUpQuestionId);
       } else {

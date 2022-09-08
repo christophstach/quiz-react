@@ -9,7 +9,7 @@ export function findById<T extends { id: K }, K>(entities: T[], id: K): T | unde
 export function isQuestionAnswered(question: Question): boolean {
   if (question.type === QuestionType.Simple) {
     return question.selectedAnswerId !== null;
-  } else {
+  } else if(question.type === QuestionType.MultipleChoice) {
     if (question.minAnswers && question.maxAnswers) {
       return (
         question.selectedAnswerIds !== null &&
@@ -23,6 +23,8 @@ export function isQuestionAnswered(question: Question): boolean {
     } else {
       return question.selectedAnswerIds !== null;
     }
+  } else {
+    return false;
   }
 }
 
